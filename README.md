@@ -2,13 +2,13 @@
  apitool工具类
 
 Maven:在项目的pom.xml的dependencies中加入以下内容:
-
+``` xml
 <dependency>
     <groupId>com.github.alotuser</groupId>
     <artifactId>apitool</artifactId>
     <version>1.0.1</version>
 </dependency>
-
+```
 
 accessKey和secretKey 用户密钥（保管好账号密钥，不要外泄）
 
