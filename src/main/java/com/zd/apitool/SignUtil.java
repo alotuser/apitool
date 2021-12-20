@@ -39,10 +39,10 @@ public class SignUtil {
 	 * @return
 	 */
 	public static String signParamsMd5Upper(Map<String, String> params,String... otherParams) {
-		return signParamsMd5Upper(params,StrPool.EMPTY,StrPool.EMPTY,otherParams);
+		return signParamsMd5Str(params,StrPool.EMPTY,StrPool.EMPTY,otherParams).toUpperCase();
 	}
 	/**
-	 * 对参数做md5签名<br>
+	 * 对参数做md5签名，并将得到的字符串所有字符转换为大写<br>
 	 * 参数签名为对Map参数按照key的顺序排序后拼接为字符串，然后根据提供的签名算法生成签名字符串<br>
 	 * 拼接后的字符串键值对之间无符号，键值对之间无符号
 	 *
@@ -52,7 +52,7 @@ public class SignUtil {
 	 * @param otherParams		其它附加参数字符串（例如密钥）
 	 * @return
 	 */
-	public static String signParamsMd5Upper(Map<String, String> params,String separator, String keyValueSeparator,String... otherParams) {
+	public static String signParamsMd5Str(Map<String, String> params,String separator, String keyValueSeparator,String... otherParams) {
 		Map<String,String> keyvals=new HashMap<String, String>();
 		String otherParamsStr=StrUtil.EMPTY;
 		if (ArrayUtil.isNotEmpty(otherParams)) {
@@ -65,8 +65,7 @@ public class SignUtil {
 		}
 		TreeMap<String, String> tmp= new TreeMap<String, String>(params);
 		String data= MapUtil.join(tmp, separator, keyValueSeparator,separator,otherParamsStr);
-		//对params进行MD5运算，并将得到的字符串所有字符转换为大写
-		return SecureUtil.md5(data).toUpperCase();
+		return SecureUtil.md5(data);
 	}
 	
 	
