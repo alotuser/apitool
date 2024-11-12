@@ -6,7 +6,7 @@
 <dependency>
     <groupId>com.github.alotuser</groupId>
     <artifactId>apitool</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 </dependency>
 ```
 ### demo代码演示
