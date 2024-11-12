@@ -66,7 +66,6 @@ public class Base64Plus {
 		}
 		return Base64.decodeStr(deData);
 		
-		//return deData.toString();
 	}
 	
 	
