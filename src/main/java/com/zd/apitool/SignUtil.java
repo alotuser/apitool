@@ -39,7 +39,7 @@ public class SignUtil {
 	 * @return
 	 */
 	public static String signParamsMd5Upper(Map<String, String> params,String... otherParams) {
-		return signParamsMd5Str(params,StrPool.EMPTY,StrPool.EMPTY,otherParams).toUpperCase();
+		return signParamsMd5String(params,StrPool.EMPTY,StrPool.EMPTY,otherParams).toUpperCase();
 	}
 	/**
 	 * 对参数做md5签名，并将得到的字符串所有字符转换为大写<br>
@@ -52,22 +52,56 @@ public class SignUtil {
 	 * @param otherParams		其它附加参数字符串（例如密钥）
 	 * @return
 	 */
-	public static String signParamsMd5Str(Map<String, String> params,String separator, String keyValueSeparator,String... otherParams) {
+	public static String signParamsMd5String(Map<String, String> params,String separator, String keyValueSeparator,String... otherParams) {
 		Map<String,String> keyvals=new HashMap<String, String>();
-		String otherParamsStr=StrUtil.EMPTY;
+		String otherParamStr=StrUtil.EMPTY;
 		if (ArrayUtil.isNotEmpty(otherParams)) {
 			 for (int i = 0; i < otherParams.length; i += 2) {
 		            String key = otherParams[i];
 		            String value = otherParams[i+1];
 		            keyvals.put(key, value);
 		        }
-			 otherParamsStr= MapUtil.join(keyvals, separator, keyValueSeparator);
+			 otherParamStr= MapUtil.join(keyvals, separator, keyValueSeparator);
 		}
+		
+		return signParamMd5Str(params, separator, keyValueSeparator, otherParamStr);
+	}
+	/**
+	 * 对参数做md5签名，并将得到的字符串所有字符转换为大写<br>
+	 * 参数签名为对Map参数按照key的顺序排序后拼接为字符串，然后根据提供的签名算法生成签名字符串<br>
+	 * 拼接后的字符串键值对之间无符号，键值对之间无符号
+	 * @param params		参数
+	 * @param otherParams	其它附加参数字符串（例如密钥）
+	 * @return
+	 */
+	public static String signParamsMd5Str(Map<String, String> params,String... otherParams) {
+		return signParamsMd5String(params, StrPool.AMP, StrPool.EQUAL, otherParams);
+	}
+	/**
+	 * 对参数做md5签名，并将得到的字符串所有字符转换为大写<br>
+	 * 参数签名为对Map参数按照key的顺序排序后拼接为字符串，然后根据提供的签名算法生成签名字符串<br>
+	 * 拼接后的字符串键值对之间无符号，键值对之间无符号
+	 *
+	 * @param params			参数
+	 * @param separator			entry之间的连接符
+	 * @param keyValueSeparator	kv之间的连接符
+	 * @param otherParamStr	其它附加参数字符串（例如密钥）
+	 * @return
+	 */
+	public static String signParamMd5Str(Map<String, String> params,String separator, String keyValueSeparator,String otherParamStr) {
 		TreeMap<String, String> tmp= new TreeMap<String, String>(params);
-		String data= MapUtil.join(tmp, separator, keyValueSeparator,separator,otherParamsStr);
+		String data= MapUtil.join(tmp, separator, keyValueSeparator,separator,otherParamStr);
 		return SecureUtil.md5(data);
 	}
-	
-	
-	
+	/**
+	 * 对参数做md5签名，并将得到的字符串所有字符转换为大写<br>
+	 * 参数签名为对Map参数按照key的顺序排序后拼接为字符串，然后根据提供的签名算法生成签名字符串<br>
+	 * 拼接后的字符串键值对之间无符号，键值对之间无符号
+	 * @param params			参数
+	 * @param otherParamStr	其它附加参数字符串（例如密钥）
+	 * @return
+	 */
+	public static String signParamMd5Str(Map<String, String> params,String otherParamStr) {
+		return signParamMd5Str(params, StrPool.AMP, StrPool.EQUAL, otherParamStr);
+	}
 }
